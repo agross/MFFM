@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Mffm.Contracts;
 
 namespace Mffm.Core;
@@ -11,7 +10,7 @@ namespace Mffm.Core;
 ///     dictionary.
 /// </summary>
 /// <param name="bindingManager"></param>
-public class WindowManager(IServiceProvider serviceProvider, IBindingManager bindingManager, IFormMapper formMapper) : IWindowManager
+internal class WindowManager(IServiceProvider serviceProvider, IBindingManager bindingManager, IFormMapper formMapper) : IWindowManager
 {
     private readonly IServiceProvider _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
     private readonly IBindingManager _bindingManager = bindingManager ?? throw new ArgumentNullException(nameof(bindingManager));

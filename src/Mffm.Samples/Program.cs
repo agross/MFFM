@@ -4,7 +4,9 @@ using Mffm.Samples.Core.Services;
 using Mffm.Samples.Extensions.GeoComponent;
 using Mffm.Samples.Ui.EditUser;
 using Mffm.Samples.Ui.Main;
+using Mffm.Samples.Ui.Protocol;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics;
 
 namespace Mffm.Samples;
 
@@ -34,8 +36,17 @@ internal static class Program
         // create the service provider aka container
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
+        var inpc = serviceProvider.GetRequiredService<ProtocolFormModel>();
+        inpc.PropertyChanged += Inpc_PropertyChanged;
+        inpc.Log = "changed";
+
         // Run the application directly on service provider
         serviceProvider.Run<MainFormModel>();
+    }
+
+    private static void Inpc_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        Debug.WriteLine("It works!");
     }
 
     #region Microsoft DI service configurations

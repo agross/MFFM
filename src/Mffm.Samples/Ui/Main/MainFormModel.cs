@@ -10,8 +10,6 @@ namespace Mffm.Samples.Ui.Main;
 
 public class MainFormModel : IFormModel, INotifyPropertyChanged, IHandle<LogMessage>
 {
-    private string _logMessages = string.Empty;
-    private string _logMessageToSend = string.Empty;
     private string _peopleSelected;
 
     public MainFormModel(
@@ -46,49 +44,25 @@ public class MainFormModel : IFormModel, INotifyPropertyChanged, IHandle<LogMess
 
     public string LogMessages
     {
-        get => _logMessages;
-        set
-        {
-            if (value == _logMessages) return;
-            _logMessages = value;
-            OnPropertyChanged();
-        }
+        get;
+        set;
     }
 
     public string LogMessageToSend
     {
-        get => _logMessageToSend;
-        set
-        {
-            if (value == _logMessageToSend) return;
-            _logMessageToSend = value;
-            OnPropertyChanged();
-        }
+        get;
+        set;
     }
 
     public IList<string> People { get; } = new List<string> { "Alice", "Bob", "Charlie" };
 
     public string PeopleSelected
     {
-        get => _peopleSelected;
-        set
-        {
-            if (value == _peopleSelected) return;
-            _peopleSelected = value;
-            OnPropertyChanged();
-        }
+        get;
+        set;
     }
 
     #endregion
-
-    #region INotifyPropertyChanged
 
     public event PropertyChangedEventHandler? PropertyChanged;
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
-    #endregion
 }

@@ -35,10 +35,9 @@ public class EditFormModel : IFormModel, INotifyPropertyChanged
       return _firstname; 
     } 
     set { 
-     _firstname = value; 
-      //OnPropertyChanged();
+      _firstname = value; 
+    
       Save.MaybeCanExecuteChanged();
-      
       } 
     }
     public string Lastname { get; set; }

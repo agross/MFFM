@@ -23,13 +23,8 @@ public class ProtocolFormModel : INotifyPropertyChanged, IHandle<LogMessage>, IF
 
     public string Log
     {
-        get => _log;
-        set
-        {
-            if (value == _log) return;
-            _log = value;
-            OnPropertyChanged();
-        }
+        get;
+        set;
     }
 
     public Task HandleAsync(LogMessage message, CancellationToken cancellationToken)
@@ -38,10 +33,5 @@ public class ProtocolFormModel : INotifyPropertyChanged, IHandle<LogMessage>, IF
         return Task.CompletedTask;
     }
 
-    public event PropertyChangedEventHandler? PropertyChanged = (sender, args) => { };
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
+    public event PropertyChangedEventHandler? PropertyChanged;
 }

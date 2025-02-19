@@ -15,7 +15,7 @@ internal class BindingManager : IBindingManager
     }
 
     #region GetAllControls helper
-    private IEnumerable<Control> GetControlsRecursively(Control control)
+    private IEnumerable<Control> GetControls(Control control)
     {
         if (control.Controls.Count == 0) { return []; }
 
@@ -23,20 +23,7 @@ internal class BindingManager : IBindingManager
         foreach (Control innerControl in control.Controls)
         {
             result.Add(innerControl);
-            result.AddRange(GetControlsRecursively(innerControl));
-        }
-
-        return result;
-    }
-
-    private IEnumerable<Control> GetAllControls(Form form)
-    {
-        var result = new List<Control>();
-
-        foreach (Control control in form.Controls)
-        {
-            result.Add(control);
-            result.AddRange(GetControlsRecursively(control));
+            result.AddRange(GetControls(innerControl));
         }
 
         return result;
@@ -66,7 +53,7 @@ internal class BindingManager : IBindingManager
     public void CreateBindings(IFormModel formModel, Form form)
     {
         // let us iterate over all controls and let the binding handle the control to model binding
-        foreach (Control formControl in GetAllControls(form))
+        foreach (Control formControl in GetControls(form))
         {
             Debug.WriteLine($"Control {formControl.Name} found of type {formControl.GetType().Name}");
             foreach (var controlBinding in _bindings)
@@ -89,9 +76,7 @@ internal class BindingManager : IBindingManager
 
             menuItem.DataBindings.Add(new Binding(nameof(menuItem.CommandParameter), formModel, null, true, DataSourceUpdateMode.Never));
             menuItem.DataBindings.Add(new Binding(nameof(menuItem.Command), formModel, menuItem.Name, true, DataSourceUpdateMode.OnPropertyChanged));
-
-
-        }
+         }
 
         //foreach (var property in formModel.GetType().GetProperties())
         //{
